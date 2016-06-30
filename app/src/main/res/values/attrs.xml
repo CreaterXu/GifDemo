@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="line_length" format="dimension"></attr>
+    <attr name="line_higth" format="dimension"></attr>
+    <declare-styleable name="Line">
+        <attr name="line_length"></attr>
+        <attr name="line_higth"></attr>
+    </declare-styleable>
+</resources>

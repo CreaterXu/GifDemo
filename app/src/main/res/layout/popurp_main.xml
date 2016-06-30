@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sky="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="从相机拍摄"
+        android:id="@+id/textView"
+        android:layout_gravity="center_horizontal" />
+    <com.skystudio.widght.Line
+        sky:line_length="52dp"
+        sky:line_higth="60dp">
+
+    </com.skystudio.widght.Line>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="从图库选择"
+        android:id="@+id/textView2"
+        android:layout_gravity="center_horizontal" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="取消"
+        android:id="@+id/textView3"
+        android:layout_gravity="center_horizontal" />
+</LinearLayout>
