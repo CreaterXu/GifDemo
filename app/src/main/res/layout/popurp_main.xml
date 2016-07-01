@@ -12,8 +12,10 @@
         android:layout_gravity="center_horizontal" />
 
     <widght.Line
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></widght.Line>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        sky:line_higth="1sp"
+        sky:line_length="10dp"></widght.Line>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
