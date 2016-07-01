@@ -2,7 +2,7 @@
 <resources>
     <attr name="line_length" format="dimension"></attr>
     <attr name="line_higth" format="dimension"></attr>
-    <declare-styleable name="Line">
+    <declare-styleable name="widght.Line">
         <attr name="line_length"></attr>
         <attr name="line_higth"></attr>
     </declare-styleable>

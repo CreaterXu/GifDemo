@@ -10,11 +10,10 @@
         android:text="从相机拍摄"
         android:id="@+id/textView"
         android:layout_gravity="center_horizontal" />
-    <com.skystudio.widght.Line
-        sky:line_length="52dp"
-        sky:line_higth="60dp">
 
-    </com.skystudio.widght.Line>
+    <widght.Line
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></widght.Line>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
