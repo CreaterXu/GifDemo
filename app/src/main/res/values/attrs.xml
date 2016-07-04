@@ -2,8 +2,14 @@
 <resources>
     <attr name="line_length" format="dimension"></attr>
     <attr name="line_higth" format="dimension"></attr>
+    <attr name="line_color" format="color"></attr>
+    <attr name="line_type" format="boolean"></attr>
+    <attr name="line_cyclenum" format="integer"></attr>
     <declare-styleable name="widght.Line">
         <attr name="line_length"></attr>
         <attr name="line_higth"></attr>
+        <attr name="line_color"></attr>
+        <attr name="line_type"></attr>
+        <attr name="line_cyclenum"></attr>
     </declare-styleable>
 </resources>

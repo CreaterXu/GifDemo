@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:sky="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="1">
 
     <TextView
         android:layout_width="wrap_content"
@@ -13,15 +14,17 @@
 
     <widght.Line
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        sky:line_higth="1sp"
-        sky:line_length="10dp"></widght.Line>
+        android:layout_height="120dp"
+        sky:line_color="@color/colorAccent"
+        sky:line_type="false"
+        ></widght.Line>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="从图库选择"
         android:id="@+id/textView2"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
