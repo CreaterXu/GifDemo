@@ -1,7 +1,13 @@
 package utils;
 
 import android.content.Context;
+import android.os.Looper;
+import android.util.Log;
 import android.widget.Toast;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 
 /**异常处理工具类    处理全局异常
  * Created by Administrator on 2016/7/5.
@@ -33,11 +39,12 @@ public class ExceptionUtils implements Thread.UncaughtExceptionHandler{
     }
     @Override
     public void uncaughtException(Thread thread, Throwable ex) {
-        if (carshHandler!=null&&!handleException(ex))
+        boolean isHandler=handleException(ex);
+        if (carshHandler!=null&&!isHandler)
             carshHandler.uncaughtException(thread,ex);
         else {
             try {
-                Thread.sleep(3000);
+                Thread.sleep(10000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -52,7 +59,37 @@ public class ExceptionUtils implements Thread.UncaughtExceptionHandler{
      * @param ex
      * */
     private boolean handleException(final Throwable ex){
-        Toast.makeText(context,"chux",Toast.LENGTH_LONG).show();
-        return true;
+        if (ex==null){
+            return false;
+        }else {
+            //开启新线程在UI上显示提示消息
+            new Thread(){
+                @Override
+                public void run() {
+                    super.run();
+                    Looper.prepare();
+                    Toast.makeText(context,"亲，app要爆炸了，赶紧撤退",Toast.LENGTH_LONG).show();
+                    Looper.loop();
+                }
+            }.start();
+            Log.e("xv","has handle the exception"+getErrorInfo(ex));
+            return true;
+        }
+
+    }
+
+
+    /**
+     * 获取错误的信息
+     * @param ex
+     * @return
+     */
+    private String getErrorInfo(Throwable ex) {
+        Writer writer = new StringWriter();
+        PrintWriter pw = new PrintWriter(writer);
+        ex.printStackTrace(pw);
+        pw.close();
+        String error= writer.toString();
+        return error;
     }
 }

@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+
     }
 
     @Override
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
      * 显示弹出框
      * */
     private void showPopupWindow() {
+        int i=1/0;
         View parentView = LayoutInflater.from(this).inflate(R.layout.content_main, null);
         View view = getLayoutInflater().from(this).inflate(R.layout.popurp_main, null);
         popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
