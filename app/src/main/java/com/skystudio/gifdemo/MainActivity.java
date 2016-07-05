@@ -22,6 +22,7 @@ import android.widget.PopupWindow;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import utils.ExceptionUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ExceptionUtils exceptionUtils=ExceptionUtils.getInstance();
+        exceptionUtils.init(getApplicationContext());
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-
-
     }
 
     @Override
@@ -100,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
                 cancelPopupWindow();
                 break;
             case R.id.addButton:
-                Log.e("xv","in click");
                 showPopupWindow();
                 break;
             case R.id.fab:

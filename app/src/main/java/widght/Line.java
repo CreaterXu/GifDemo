@@ -21,11 +21,11 @@ public class Line extends View{
     private int mHigth;
     private int mColor;
     private int mCycle;//一个周期的宽度
-    private int mCycleNum=DEFAULT_CYCLE_NUM;//周期数
     private int mLineType=LINE_TYPE_STRAIGHT;
     private Paint mPaint;//画笔
+    private Canvas canvas;//画布
+    private int mStart;//起始的标志
 
-    public static final int DEFAULT_CYCLE_NUM=6;
     public static final int LINE_TYPE_WAVE=1;
     public static  final int LINE_TYPE_STRAIGHT=2;
     public Line(Context context) {
@@ -60,10 +60,10 @@ public class Line extends View{
                     boolean type=true;
                     type=typedArray.getBoolean(attr,true);
                     if (type)mLineType=LINE_TYPE_STRAIGHT;
-                    else mLineType=LINE_TYPE_WAVE;
-                    break;
-                case R.styleable.widght_Line_line_cyclenum:
-                    mCycleNum=typedArray.getInt(attr,DEFAULT_CYCLE_NUM);
+                    else {
+                        mLineType=LINE_TYPE_WAVE;
+                        moveSin.start();//启动曲线运动线程
+                    }
                     break;
             }
         }
@@ -98,27 +98,51 @@ public class Line extends View{
 
     @Override
     protected void onDraw(Canvas canvas) {
+
         super.onDraw(canvas);
-        mCycle=getWidth()/mCycleNum;
+        this.canvas=canvas;
+        mCycle=2*getHeight();
         if(mLineType==LINE_TYPE_STRAIGHT){
             canvas.drawRect(0,0,getWidth(),getHeight(),mPaint);
         }else {
-            drawSin(getWidth(),getHeight(),canvas);
-            //canvas.drawLine(0,0,mPaint);
+            drawSin(getWidth(),getHeight(),mStart*90,canvas);
         }
 
     }
+
+
+
     /**
      * 绘制正弦曲线
      * @param width,height,canvas
      * */
-    private void drawSin(int width,int height,Canvas canvas){
+    private void drawSin(int width,int height,int firstRadians,Canvas canvas){
         int oldX=0,oldY=0;
         for (int i=oldX+1;i<width+1;i++){
-            int y=(int) Math.sin(Math.toRadians(i%mCycle*mCycle/360));
-            canvas.drawLine(oldX,oldY,i,y*height/2,mPaint);
+            double y= Math.sin(Math.toRadians((i%mCycle*360/mCycle)+firstRadians));
+            canvas.drawLine(oldX,oldY,i,(int)((y+1)*height/2),mPaint);
             oldX=i;
-            oldY=y;
+            oldY=(int)((y+1)*height/2);
         }
     }
+
+    /**将sin曲线运动起来的线程***********************/
+    Thread moveSin=new Thread(){
+        @Override
+        public void run() {
+            super.run();
+            while (true){
+                for (int i=0;i<4;i++){
+                    mStart=i;
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    postInvalidate();
+                }
+            }
+        }
+    };
+
 }

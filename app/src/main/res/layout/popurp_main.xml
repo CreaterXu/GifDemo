@@ -14,10 +14,10 @@
 
     <widght.Line
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         sky:line_color="@color/colorAccent"
         sky:line_type="false"
-        ></widght.Line>
+        android:layout_weight="0.15"></widght.Line>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
