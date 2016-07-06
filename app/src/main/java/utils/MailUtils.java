@@ -27,7 +27,7 @@ public class MailUtils {
      * 发送邮件
      *
      * */
-    public boolean sendMail(Address postAddress, Multipart multipart){
+    public synchronized boolean sendMail(Address postAddress, Multipart multipart){
         try {
             Properties properties=new Properties();
             MAuth authenticator=new MAuth(username,password);
