@@ -9,6 +9,9 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import javax.mail.Session;
+import javax.mail.internet.InternetAddress;
+
 /**异常处理工具类    处理全局异常
  * Created by Administrator on 2016/7/5.
  */
@@ -69,10 +72,12 @@ public class ExceptionUtils implements Thread.UncaughtExceptionHandler{
                     super.run();
                     Looper.prepare();
                     Toast.makeText(context,"亲，app要爆炸了，赶紧撤退",Toast.LENGTH_LONG).show();
+
                     Looper.loop();
                 }
             }.start();
             Log.e("xv","has handle the exception"+getErrorInfo(ex));
+
             return true;
         }
 

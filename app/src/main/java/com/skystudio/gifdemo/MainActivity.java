@@ -19,10 +19,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
+import javax.mail.internet.InternetAddress;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import utils.ExceptionUtils;
+import utils.MailUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -73,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
      * 显示弹出框
      * */
     private void showPopupWindow() {
-        int i=1/0;
+        //int i=1/0;
         View parentView = LayoutInflater.from(this).inflate(R.layout.content_main, null);
         View view = getLayoutInflater().from(this).inflate(R.layout.popurp_main, null);
         popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
@@ -106,7 +109,16 @@ public class MainActivity extends AppCompatActivity {
                 showPopupWindow();
                 break;
             case R.id.fab:
-                cancelPopupWindow();
+                //cancelPopupWindow();
+                try {
+                    Log.e("xv","in case ");
+                    MailUtils mailUtils=new MailUtils();
+                    mailUtils.setUsername("545262342@qq.com");
+                    mailUtils.setPassword("xv993722612");
+                    mailUtils.sendMail(new InternetAddress("CreaterXv@163.com"),null);
+                }catch (Exception ex){
+                    Log.e("xv","x"+ex.toString());
+                }
                 break;
         }
     }
