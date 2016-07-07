@@ -19,12 +19,15 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
+
+import javax.mail.Address;
 import javax.mail.internet.InternetAddress;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import utils.ExceptionUtils;
+import utils.HisEmailUtils;
 import utils.MailUtils;
 
 public class MainActivity extends AppCompatActivity {
@@ -110,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.fab:
                 //cancelPopupWindow();
-                try {
+               /* try {
                     Log.e("xv","in case ");
                     MailUtils mailUtils=new MailUtils();
                     mailUtils.setUsername("545262342@qq.com");
@@ -118,7 +121,34 @@ public class MainActivity extends AppCompatActivity {
                     mailUtils.sendMail(new InternetAddress("CreaterXv@163.com"),null);
                 }catch (Exception ex){
                     Log.e("xv","x"+ex.toString());
-                }
+                }*/
+                Thread sendEmail =new Thread(){
+                    @Override
+                    public void run() {
+                        super.run();
+                        try {
+                            Log.e("xv","in send");
+                           /* HtmlEmail email=new HtmlEmail();
+                            email.setHostName("smtp@qq.com");
+                            email.setSSL(true);
+                            email.setAuthentication("545262342@qq.com","xv993722612");
+                            email.setFrom("545262342@qq.com");
+                            email.setSubject("first android mail");
+                            email.addTo("545262342@qq.com");
+                            email.send();*/
+                            //HisEmailUtils.sendEmail("545262342@qq.com","xxx","dddd");
+                            MailUtils mailUtils=new MailUtils();
+                            mailUtils.setUsername("createrxv@163.com");
+                            mailUtils.setPassword("xv545262342");
+                            mailUtils.sendMail("545262342@qq.com","first mail","Content",null);
+                            Log.e("xv","send over");
+                        }catch (Exception ex){
+                            ex.printStackTrace();
+                        }
+
+                    }
+                };
+                sendEmail.start();
                 break;
         }
     }

@@ -1,8 +1,13 @@
 package utils;
 
+
+
+import android.util.Log;
+
 import java.util.Date;
 import java.util.Properties;
 
+import javax.activation.DataHandler;
 import javax.mail.Address;
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -11,8 +16,11 @@ import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
 
 /**
  * 邮件工具   邮件设置，发送，接收
@@ -27,13 +35,23 @@ public class MailUtils {
      * 发送邮件
      *
      * */
-    public synchronized boolean sendMail(Address postAddress, Multipart multipart){
+    public synchronized boolean sendMail(String postAddress,String subject,String content,Multipart multipart){
         try {
-            Properties properties=new Properties();
-            MAuth authenticator=new MAuth(username,password);
-            Session session=Session.getDefaultInstance(properties,authenticator);
-            Message message=setMessage(session,postAddress,new InternetAddress(username),multipart);
-            Transport.send(message);
+            Properties props = System.getProperties();
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", "smtp.163.com");
+            props.put("mail.smtp.user", getUsername());
+            props.put("mail.smtp.password", getPassword());
+            props.put("mail.smtp.port", "25");
+            props.put("mail.smtp.auth", "true");
+            MAuth authenticator=new MAuth(getUsername(),getPassword());
+            Session session=Session.getDefaultInstance(props,authenticator);
+            MimeMessage message=setMessage(session,postAddress,subject,new InternetAddress(username),multipart);
+            Transport transport=session.getTransport("smtp");
+            transport.connect("smtp.163.com",getUsername(),getPassword());
+            Log.i("check", "connected");
+            transport.send(message,message.getAllRecipients());
+            transport.close();
         } catch (MessagingException e) {
             e.printStackTrace();
         }
@@ -45,17 +63,24 @@ public class MailUtils {
      * @param postAddress
      * @param senderAddress
      * @param session
-     * @return
+     * @param subject
+     * @return message
      * */
-    private Message setMessage(Session session,Address postAddress, Address senderAddress, Multipart multipart){
+    private MimeMessage setMessage(Session session,String  postAddress,String subject, Address senderAddress, Multipart multipart) throws AddressException {
+        Address post=new InternetAddress(postAddress);
         MimeMessage message=new MimeMessage(session);
+
         try {
-            message.setSubject("xxx");
+            DataHandler handler = new DataHandler(new ByteArrayDataSource("".getBytes(), "text/plain"));
+            message.setSender(senderAddress);
+            message.setDataHandler(handler);
+            message.setSubject(subject);
             message.setSentDate(new Date());
-            if (multipart!=null)
+            if (multipart==null)
+                multipart=new MimeMultipart();
             message.setContent(multipart);
-            message.setFrom(senderAddress);
-            message.addRecipient(Message.RecipientType.TO,postAddress);
+            message.setFrom();
+            message.addRecipient(Message.RecipientType.TO,post);
         } catch (MessagingException e) {
             e.printStackTrace();
         }
