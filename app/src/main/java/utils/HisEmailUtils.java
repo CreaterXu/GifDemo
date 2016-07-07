@@ -2,15 +2,18 @@ package utils;
 
 import android.util.Log;
 
+import java.io.FileInputStream;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
+import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
@@ -81,9 +84,11 @@ public class HisEmailUtils {
         MimeMessage message = new MimeMessage(session);
         message.setFrom(new InternetAddress(from));
         message.setDataHandler(handler);
-        Log.i("Check", "done sessions");
-
+        Log.e("xv", "done sessions");
+        //添加附件
         multiPart = new MimeMultipart();
+        BodyPart bodyPart=new MimeBodyPart(new FileInputStream(""));
+        multiPart.addBodyPart(bodyPart);
         InternetAddress toAddress;
         toAddress = new InternetAddress(to);
         message.addRecipient(Message.RecipientType.TO, toAddress);
